@@ -9,12 +9,12 @@
     // Your web app's Firebase configuration
     // Make sure this matches your project settings exactly!
     const firebaseConfig = {
-      apiKey: "AIzaSyDMTteFa4xwmFOfxMYtBLBisvbTyNW9hoc",
-      authDomain: "donor-database-644ae.firebaseapp.com",
-      projectId: "donor-database-644ae",
-      storageBucket: "donor-database-644ae.firebasestorage.app",
-      messagingSenderId: "381570103144",
-      appId: "1:381570103144:web:62c9935546780bc81e88dd",
+      apiKey: "",
+      authDomain: "",
+      projectId: "",
+      storageBucket: "",
+      messagingSenderId: "",
+      appId: "",
       // Add databaseURL if you are not using the default RTDB instance for this config
       // databaseURL: "https://donor-database-644ae-default-rtdb.firebaseio.com" // Your default database URL
     };
