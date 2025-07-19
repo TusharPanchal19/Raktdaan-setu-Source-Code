@@ -43,13 +43,13 @@
 
     // Firebase Configuration
     const firebaseConfig = {
-      apiKey: "AIzaSyDMTteFa4xwmFOfxMYtBLBisvbTyNW9hoc",
-      authDomain: "donor-database-644ae.firebaseapp.com",
-      databaseURL: "https://donor-database-644ae-default-rtdb.firebaseio.com",
-      projectId: "donor-database-644ae",
-      storageBucket: "donor-database-644ae.appspot.com",
-      messagingSenderId: "381570103144",
-      appId: "1:381570103144:web:62c9935546780bc81e88dd"
+      apiKey: "",
+      authDomain: "",
+      databaseURL: "",
+      projectId: "",
+      storageBucket: "",
+      messagingSenderId: "",
+      appId: ""
     };
 
     // Initialize Firebase
@@ -57,7 +57,7 @@
     const db = getDatabase(app);
 
     // Initialize EmailJS
-    emailjs.init("KeUP7RejFaqaZs8ho"); // Replace with your actual public key
+    emailjs.init(""); // Replace with your actual public key
 
     const form = document.getElementById("donorForm");
     let generatedOTP = "";
@@ -83,7 +83,7 @@
         email: email
       };
 
-      return emailjs.send("service_hwgybtv", "template_62o4f7f", templateParams);
+      return emailjs.send("", "", templateParams);
     }
 
     // Submit Handler
