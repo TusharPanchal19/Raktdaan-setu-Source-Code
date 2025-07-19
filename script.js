@@ -5,12 +5,12 @@
   import { getDatabase, ref, set, get, child } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-database.js";
   
   const firebaseConfig= 
-    {apiKey :"AIzaSyAdGhFQbE0s5OVkevcyq5ZNT9puQgROq-4",
-    authDomain: "blood-donation-53d8e.firebaseapp.com",
-    projectId: "blood-donation-53d8e",
-    storageBucket: "blood-donation-53d8e.firebasestorage.app",
-    messagingSenderId: "792832764644",
-    appId: "1:792832764644:web:02a86d3ca84c472137daf1"
+    {apiKey :"",
+    authDomain: "",
+    projectId: "",
+    storageBucket: "",
+    messagingSenderId: "",
+    appId: ""
   }
  
 
