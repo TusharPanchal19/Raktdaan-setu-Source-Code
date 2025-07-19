@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Donor Registration - Blood Donation</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+  <style>
+    .object-cover { object-fit: cover; }
+  </style>
+</head>
+<body class="bg-red-50 min-h-screen py-10">
+  <div class="max-w-4xl mx-auto">
+    <div class="bg-white p-8 rounded-2xl shadow-lg mb-10">
+      <h1 class="text-2xl font-bold mb-6 text-red-600 text-center">Blood Donor Registration</h1>
+      <form id="donorForm" class="space-y-4">
+        <input type="text" id="name" placeholder="Full Name" required class="w-full p-2 border rounded" />
+        <input type="number" id="age" placeholder="Age" required class="w-full p-2 border rounded" />
+        <input type="number" id="weight" placeholder="Weight (kg)" required class="w-full p-2 border rounded" />
+        <select id="group" required class="w-full p-2 border rounded">
+          <option value="">Blood Group</option>
+          <option>A+</option><option>A-</option><option>B+</option><option>B-</option>
+          <option>O+</option><option>O-</option><option>AB+</option><option>AB-</option>
+        </select>
+        <select id="previous" required class="w-full p-2 border rounded">
+          <option value="">Previous Donations</option>
+          <option>None</option><option>1-2 times</option><option>3+ times</option>
+        </select>
+        <input type="tel" id="contact" placeholder="Contact Number" required class="w-full p-2 border rounded" />
+        <input type="email" id="email" placeholder="Email Address" required class="w-full p-2 border rounded" />
+        <input type="text" id="address" placeholder="Address" required class="w-full p-2 border rounded" />
+        <input type="file" id="picture" accept="image/*" class="w-full p-2 border rounded" />
+        <input type="text" id="otp" placeholder="Enter OTP" class="w-full p-2 border rounded hidden" />
+        <button type="submit" class="w-full bg-red-600 text-white font-semibold py-2 rounded hover:bg-red-700 transition">Register as Donor</button>
+      </form>
+    </div>
+  </div>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.8.1/firebase-app.js";
+    import { getDatabase, ref, set, push, get } from "https://www.gstatic.com/firebasejs/11.8.1/firebase-database.js";
+
+    // Firebase Configuration
+    const firebaseConfig = {
+      apiKey: "AIzaSyDMTteFa4xwmFOfxMYtBLBisvbTyNW9hoc",
+      authDomain: "donor-database-644ae.firebaseapp.com",
+      databaseURL: "https://donor-database-644ae-default-rtdb.firebaseio.com",
+      projectId: "donor-database-644ae",
+      storageBucket: "donor-database-644ae.appspot.com",
+      messagingSenderId: "381570103144",
+      appId: "1:381570103144:web:62c9935546780bc81e88dd"
+    };
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const db = getDatabase(app);
+
+    // Initialize EmailJS
+    emailjs.init("KeUP7RejFaqaZs8ho"); // Replace with your actual public key
+
+    const form = document.getElementById("donorForm");
+    let generatedOTP = "";
+    let otpSent = false;
+
+    // Check for existing email
+    async function emailExists(email) {
+      const snapshot = await get(ref(db, "donors"));
+      if (snapshot.exists()) {
+        const data = snapshot.val();
+        return Object.values(data).some((donor) => donor.email === email);
+      }
+      return false;
+    }
+
+    // Send OTP
+    function sendOTP(email, userName) {
+      generatedOTP = Math.floor(100000 + Math.random() * 900000).toString();
+
+      const templateParams = {
+        user_name: userName,
+        otp: generatedOTP,
+        email: email
+      };
+
+      return emailjs.send("service_hwgybtv", "template_62o4f7f", templateParams);
+    }
+
+    // Submit Handler
+    form.addEventListener("submit", async function (e) {
+      e.preventDefault();
+
+      const name = document.getElementById("name").value;
+      const age = document.getElementById("age").value;
+      const weight = document.getElementById("weight").value;
+      const bloodGroup = document.getElementById("group").value;
+      const previousDonations = document.getElementById("previous").value;
+      const contact = document.getElementById("contact").value;
+      const email = document.getElementById("email").value;
+      const address = document.getElementById("address").value;
+      const otpField = document.getElementById("otp");
+
+      // First Step: Send OTP if not yet sent
+      if (!otpSent) {
+        if (await emailExists(email)) {
+          alert("❌ This email is already registered.");
+          return;
+        }
+
+        sendOTP(email, name)
+          .then(() => {
+            alert("✅ OTP sent to your email. Please check and enter it below.");
+            otpField.classList.remove("hidden");
+            otpSent = true;
+          })
+          .catch((error) => {
+            console.error("EmailJS error:", error);
+            alert("❌ Failed to send OTP. Please try again.");
+          });
+        return;
+      }
+
+      // Second Step: Verify OTP
+      if (otpField.value !== generatedOTP) {
+        alert("❌ Invalid OTP. Please try again.");
+        return;
+      }
+
+      // All Valid: Save to Firebase
+      const donorData = { name, age, weight, bloodGroup, previousDonations, contact, email, address };
+      const newDonorRef = push(ref(db, "donors"));
+
+      set(newDonorRef, donorData)
+        .then(() => {
+          alert("✅ Registration Successful!");
+          form.reset();
+          otpField.classList.add("hidden");
+          otpSent = false;
+        })
+        .catch((error) => {
+          console.error("Firebase error:", error);
+          alert("❌ Registration failed. Please try again.");
+        });
+    });
+  </script>
+</body>
+</html>

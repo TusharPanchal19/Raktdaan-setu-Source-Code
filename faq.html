@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Blood Donation - FAQ</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-50 text-gray-800">
+  <div class="max-w-5xl mx-auto py-12 px-4">
+    <h1 class="text-3xl font-bold text-center text-red-600 mb-10">Frequently Asked Questions (FAQs)</h1>
+
+    <!-- Static FAQs -->
+   <!-- Inside your HTML body, just replace the Static FAQs section with this updated one -->
+
+<!-- Static FAQs -->
+<div class="space-y-6 mb-8">
+    <div class="bg-white p-5 rounded-xl shadow">
+      <h2 class="font-semibold text-lg text-red-500">1. What is blood donation?</h2>
+      <div class="mt-3 text-gray-700">
+        Blood donation is the voluntary process of giving blood, used for transfusions and medical treatment.
+      </div>
+    </div>
+    <div class="bg-white p-5 rounded-xl shadow">
+      <h2 class="font-semibold text-lg text-red-500">2. How much blood is taken during donation?</h2>
+      <div class="mt-3 text-gray-700">
+        About 350-450 ml of blood is typically collected per donation.
+      </div>
+    </div>
+    <div class="bg-white p-5 rounded-xl shadow">
+      <h2 class="font-semibold text-lg text-red-500">3. How can I prepare for donating blood?</h2>
+      <div class="mt-3 text-gray-700">
+        Drink plenty of water, eat a healthy meal before donation, and get a good night's rest.
+      </div>
+    </div>
+    <div class="bg-white p-5 rounded-xl shadow">
+      <h2 class="font-semibold text-lg text-red-500">4. Who can donate blood?</h2>
+      <div class="mt-3 text-gray-700">
+        Generally, healthy individuals aged 18–65 weighing over 50 kg can donate.
+      </div>
+    </div>
+    <div class="bg-white p-5 rounded-xl shadow">
+      <h2 class="font-semibold text-lg text-red-500">5. How often can I donate blood?</h2>
+      <div class="mt-3 text-gray-700">
+        You can donate whole blood every 3 months (90 days).
+      </div>
+    </div>
+    <div class="bg-white p-5 rounded-xl shadow">
+      <h2 class="font-semibold text-lg text-red-500">6. Is blood donation safe?</h2>
+      <div class="mt-3 text-gray-700">
+        Yes. New, sterile equipment is used for each donor, making the process completely safe.
+      </div>
+    </div>
+    <div class="bg-white p-5 rounded-xl shadow">
+      <h2 class="font-semibold text-lg text-red-500">7. Can I donate blood if I am on medication?</h2>
+      <div class="mt-3 text-gray-700">
+        It depends on the medication. Consult with your doctor or the donation center first.
+      </div>
+    </div>
+    <div class="bg-white p-5 rounded-xl shadow">
+      <h2 class="font-semibold text-lg text-red-500">8. Will I feel weak after donating blood?</h2>
+      <div class="mt-3 text-gray-700">
+        Some people may feel a little dizzy briefly, but with rest and hydration, you'll feel fine quickly.
+      </div>
+    </div>
+    <div class="bg-white p-5 rounded-xl shadow">
+      <h2 class="font-semibold text-lg text-red-500">9. How long does the donation process take?</h2>
+      <div class="mt-3 text-gray-700">
+        The whole process, including paperwork and rest time, takes about 45 minutes to 1 hour.
+      </div>
+    </div>
+    <div class="bg-white p-5 rounded-xl shadow">
+      <h2 class="font-semibold text-lg text-red-500">10. Where can I donate blood?</h2>
+      <div class="mt-3 text-gray-700">
+        You can donate at government hospitals, Red Cross centers, private blood banks, or donation camps.
+      </div>
+    </div>
+  
+    <!-- Link to external FAQs -->
+    <div class="text-center mt-6">
+      <a href="https://www.redcrossblood.org/faq.html"
+         class="text-blue-600 hover:underline font-medium" target="_blank">
+        ➤ View more FAQs about blood donation here
+      </a>
+    </div>
+  </div>
+  
+
+    <!-- FAQ List -->
+    <div id="faqList" class="space-y-6"></div>
+      </div>
+      <div class="bg-white p-5 rounded-xl shadow">
+        <h2 class="font-semibold text-lg text-red-500">2. How much blood is taken during donation?</h2>
+        <div class="mt-3 text-gray-700">
+          About 350-450 ml of blood is typically collected per donation.
+        </div>
+      </div>
+      <div class="bg-white p-5 rounded-xl shadow">
+        <h2 class="font-semibold text-lg text-red-500">3. How can I prepare for donating blood?</h2>
+        <div class="mt-3 text-gray-700">
+          Drink plenty of water, eat a healthy meal before donation, and get a good night's rest.
+        </div>
+      </div>
+    </div>
+
+    <!-- Ask a Question Form -->
+    <div class="mt-12 bg-white p-6 rounded-xl shadow">
+      <h2 class="text-2xl font-bold text-red-600 mb-4">Ask a Question</h2>
+      <form id="questionForm" class="space-y-4">
+        <div>
+          <label class="block text-gray-700 font-medium">Your Question</label>
+          <textarea id="questionInput" rows="3" required class="w-full border border-gray-300 rounded p-2"></textarea>
+        </div>
+        <button type="submit" class="bg-red-600 text-white font-semibold px-4 py-2 rounded hover:bg-red-700">Submit Question</button>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    const form = document.getElementById('questionForm');
+    const faqList = document.getElementById('faqList');
+
+    // Load FAQs from localStorage or use default sample FAQs
+    let faqs = JSON.parse(localStorage.getItem('faqs')) || [
+      {
+        question: 'Who can donate blood?',
+        answers: ['Healthy individuals aged 18 to 65, weighing at least 50 kg.']
+      },
+      {
+        question: 'Is blood donation painful?',
+        answers: ['You may feel a quick pinch, but the process is generally painless.']
+      },
+      {
+        question: 'Can I donate blood if I smoke?',
+        answers: ['Yes, but avoid smoking for a few hours before and after donating.']
+      },
+      {
+        question: 'How long does a blood donation take?',
+        answers: ['The actual donation takes 8-10 minutes; the whole process is about 30 minutes.']
+      },
+      {
+        question: 'Can I donate blood if I am on medication?',
+        answers: ['It depends on the medication. Always check with the donation center.']
+      }
+    ];
+
+    function renderFAQs() {
+      faqList.innerHTML = '';
+      faqs.forEach((faq, index) => {
+        const newFAQ = document.createElement('div');
+        newFAQ.className = 'bg-white p-5 rounded-xl shadow';
+        newFAQ.innerHTML = `
+          <div class="flex justify-between items-start">
+            <h2 class="font-semibold text-lg text-red-500">${index + 1}. ${faq.question}</h2>
+            <button data-delete="${index}" class="text-sm text-red-500 hover:text-red-700">Delete</button>
+          </div>
+          <div class="mt-3">
+            <form class="answerForm space-y-2" data-index="${index}">
+              <textarea placeholder="Write your answer..." required class="w-full border border-gray-300 rounded p-2"></textarea>
+              <button type="submit" class="bg-green-600 text-white font-semibold px-4 py-1 rounded hover:bg-green-700">Submit Answer</button>
+            </form>
+            <div class="answers mt-4 space-y-2">
+              ${faq.answers.map(ans => `<p class='text-gray-700 bg-gray-100 p-2 rounded'>${ans}</p>`).join('')}
+            </div>
+          </div>
+        `;
+        faqList.appendChild(newFAQ);
+      });
+    }
+
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      const question = document.getElementById('questionInput').value;
+      faqs.push({ question: question, answers: [] });
+      localStorage.setItem('faqs', JSON.stringify(faqs));
+      renderFAQs();
+      form.reset();
+    });
+
+    document.addEventListener('submit', function (e) {
+      if (e.target && e.target.classList.contains('answerForm')) {
+        e.preventDefault();
+        const index = e.target.getAttribute('data-index');
+        const answerText = e.target.querySelector('textarea').value;
+        faqs[index].answers.push(answerText);
+        localStorage.setItem('faqs', JSON.stringify(faqs));
+        renderFAQs();
+      }
+    });
+
+    document.addEventListener('click', function (e) {
+      if (e.target && e.target.hasAttribute('data-delete')) {
+        const index = e.target.getAttribute('data-delete');
+        faqs.splice(index, 1);
+        localStorage.setItem('faqs', JSON.stringify(faqs));
+        renderFAQs();
+      }
+    });
+
+    // Initial render
+    renderFAQs();
+  </script>
+</body>
+</html>

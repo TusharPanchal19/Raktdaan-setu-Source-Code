@@ -1,0 +1,289 @@
+/* ✅ Video Container */
+.video-container {
+    width: 100vw;
+    height: auto;
+    max-height: 90vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: black;
+    overflow: hidden;
+}
+
+.video-container video {
+    width: 100%;
+    height: auto;
+    max-height: 90vh;
+    object-fit: contain;
+}
+
+/* ✅ Blood Cards */
+.blood-card {
+    background: linear-gradient(to bottom right, #fff0f0, #ffeaea); /* Soft gradient */
+    border: none;
+    border-radius: 15px;
+    height: 100%;
+    padding: 20px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.1);
+}
+
+.blood-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0px 8px 25px rgba(255, 0, 0, 0.4);
+}
+
+/* ✅ Card Title */
+.blood-card .card-title {
+    font-size: 1.4rem;
+    font-weight: 600;
+    margin-top: 10px;
+    color: #c0392b; /* Slight red tone */
+}
+
+/* ✅ Icon inside card */
+.blood-card .card-body i {
+    transition: transform 0.3s ease-in-out;
+    margin-bottom: 10px;
+}
+
+.blood-card:hover .card-body i {
+    transform: scale(1.2);
+}
+
+/* ✅ Button Styles */
+.blood-card .btn {
+    font-weight: bold;
+    padding: 10px 22px;
+    transition: all 0.3s ease;
+    border-radius: 25px;
+    font-size: 1rem;
+    border: none;
+    color: #fff;
+}
+
+.blood-card .btn:hover {
+    transform: scale(1.1);
+    box-shadow: 0px 4px 15px rgba(255, 255, 255, 0.4);
+}
+
+/* Custom Button Colors */
+.btn-danger {
+    background-color: #e74c3c;
+}
+
+.btn-primary {
+    background-color: #2980b9;
+}
+
+.btn-success {
+    background-color: #27ae60;
+}
+
+.btn-warning {
+    background-color: #f39c12;
+}
+
+/* ✅ Responsive Row Cards Equal Height */
+.row .col-md-3 {
+    display: flex;
+}
+
+.blood-card .card-body {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+}
+.blood-section {
+    background: linear-gradient(135deg, #ffe6e6, #ffffff);
+    padding: 50px 0;
+}
+
+
+
+
+/* blood donation eligibility checker */
+#eligibility-checker h2 {
+    font-weight: bold;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+.checker-card {
+    background: #fff8f8;
+    border-left: 5px solid #dc3545;
+    border-radius: 10px;
+}
+
+#eligibilityForm .form-label {
+    font-weight: 500;
+}
+
+#resultBox .alert {
+    font-size: 1.1rem;
+    margin-top: 10px;
+}
+
+
+
+/* blood donation information */
+/* === General Styling === */
+body {
+    font-family: 'Segoe UI', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #fff8f6;
+    color: #333;
+  }
+  
+  header, footer {
+    text-align: center;
+    padding: 20px;
+    background-color: #fce4ec;
+    color: #b71c1c;
+  }
+  
+  /* === Blood Group Checker Section === */
+  #blood-group-checker {
+    padding: 30px 20px;
+  }
+  
+  /* Container Box Styling */
+  .checker-container {
+    max-width: 600px;
+    margin: 0 auto;
+    background: #ffffff;
+    border: 1px solid #ddd;
+    border-radius: 12px;
+    padding: 30px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Section Heading */
+  .checker-container h2 {
+    color: #c62828;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+  
+  /* Dropdown Label */
+  .form-label {
+    font-weight: bold;
+    display: block;
+    margin-bottom: 8px;
+  }
+  
+  /* Dropdown Menu */
+  .form-select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    margin-bottom: 10px;
+  }
+  
+  /* Alert Box */
+  .alert-box {
+    background-color: #ffebee;
+    color: #c62828;
+    border-left: 5px solid #c62828;
+    padding: 10px;
+    border-radius: 6px;
+    display: none;
+  }
+  
+  /* Result Box (Initially Hidden) */
+  .result-box {
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    padding: 20px;
+    margin-top: 20px;
+    display: none;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+    border: 1px solid #eee;
+  }
+  
+  .result-box p {
+    margin: 10px 0;
+  }
+  
+  /* Button Styling */
+  .btn {
+    width: 100%;
+    margin-top: 12px;
+    padding: 12px;
+    border: none;
+    border-radius: 6px;
+    font-weight: bold;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background 0.3s;
+  }
+  
+  /* Donate Button */
+  .donate-btn {
+    background-color: #c62828;
+    color: white;
+  }
+  
+  .donate-btn:hover {
+    background-color: #b71c1c;
+  }
+  
+  /* Emergency Button */
+  .emergency-btn {
+    background-color: #d32f2f;
+    color: white;
+  }
+  
+  .emergency-btn:hover {
+    background-color: #c62828;
+  }
+  
+  /* Footer Link Styling */
+  footer a {
+    color: #b71c1c;
+    text-decoration: underline;
+  }
+  
+
+  /* footer */
+  .footer a:hover {
+    color: #ffc107;
+    text-decoration: underline;
+  }
+  
+  .footer i {
+    transition: 0.3s;
+  }
+  
+  .footer i:hover {
+    transform: scale(1.2);
+    color: #ffc107;
+  }
+  
+  .btn-outline-warning:hover {
+    background-color: #ffc107;
+    color: #000;
+  }
+  .foter_content{
+    padding-top: 10px;
+
+
+  }
+  .foter_contact{
+    padding-top: 1px;
+    
+   
+  }
+  .carousel-item{
+    background-color: white;
+  }
+  .recommend{
+    color:  #b71c1c;
+    margin-left: 650px;
+
+  }
+ 

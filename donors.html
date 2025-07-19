@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+  <title>Available Blood Donors</title>
+
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    .donor-card {
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .donor-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+    }
+  </style>
+</head>
+
+<body class="bg-gradient-to-br from-red-100 to-red-50 min-h-screen py-10">
+  <div class="text-center mb-12" data-aos="fade-down">
+    <h1 class="text-4xl sm:text-5xl font-extrabold text-red-700">🩸 Available Blood Donors</h1>
+  
+  </div>
+
+  <div class="max-w-4xl mx-auto mb-10 px-4 sm:px-6 lg:px-8" data-aos="fade-up">
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+      <div>
+        <label for="bloodGroupFilter" class="block text-sm font-medium text-gray-700 mb-1">Filter by Blood Group</label>
+        <select id="bloodGroupFilter" class="w-full rounded-lg border border-gray-300 p-2">
+          <option value="">All</option>
+          <option value="A+">A+</option>
+          <option value="A-">A-</option>
+          <option value="B+">B+</option>
+          <option value="B-">B-</option>
+          <option value="AB+">AB+</option>
+          <option value="AB-">AB-</option>
+          <option value="O+">O+</option>
+          <option value="O-">O-</option>
+        </select>
+      </div>
+      <div>
+        <label for="addressFilter" class="block text-sm font-medium text-gray-700 mb-1">Filter by Address</label>
+        <input id="addressFilter" type="text" placeholder="Enter address/city" class="w-full rounded-lg border border-gray-300 p-2" />
+      </div>
+    </div>
+  </div>
+
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div id="donorContainer" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+      <p class="text-center text-gray-500 col-span-full" id="loadingMessage">Loading donors...</p>
+    </div>
+  </div>
+
+  <!-- Firebase -->
+  <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-database-compat.js"></script>
+
+  <script>
+    AOS.init();
+    emailjs.init("YOUR_PUBLIC_KEY"); // Replace with your EmailJS public key
+  </script>
+
+  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyDMTteFa4xwmFOfxMYtBLBisvbTyNW9hoc",
+      authDomain: "donor-database-644ae.firebaseapp.com",
+      databaseURL: "https://donor-database-644ae-default-rtdb.firebaseio.com",
+      projectId: "donor-database-644ae",
+      storageBucket: "donor-database-644ae.appspot.com",
+      messagingSenderId: "381570103144",
+      appId: "1:381570103144:web:62c9935546780bc81e88dd"
+    };
+
+    firebase.initializeApp(firebaseConfig);
+    const database = firebase.database();
+
+    const donorContainer = document.getElementById('donorContainer');
+    const bloodGroupFilter = document.getElementById('bloodGroupFilter');
+    const addressFilter = document.getElementById('addressFilter');
+    const loadingMessage = document.getElementById('loadingMessage');
+
+    let donorsData = [];
+
+    database.ref("donors").on("value", (snapshot) => {
+      donorsData = [];
+      loadingMessage.classList.add('hidden');
+      snapshot.forEach((child) => {
+        donorsData.push(child.val());
+      });
+      renderFilteredDonors();
+    });
+
+    bloodGroupFilter.addEventListener('change', renderFilteredDonors);
+    addressFilter.addEventListener('input', renderFilteredDonors);
+
+    function renderFilteredDonors() {
+      const selectedBloodGroup = bloodGroupFilter.value.toLowerCase();
+      const enteredAddress = addressFilter.value.toLowerCase();
+      donorContainer.innerHTML = "";
+
+      const filtered = donorsData.filter(donor => {
+        const blood = donor.bloodGroup?.toLowerCase() || '';
+        const address = donor.address?.toLowerCase() || '';
+        return (!selectedBloodGroup || blood === selectedBloodGroup) &&
+               (!enteredAddress || address.includes(enteredAddress));
+      });
+
+      if (filtered.length === 0) {
+        donorContainer.innerHTML = `<p class="text-center text-gray-500 col-span-full">No matching donors found.</p>`;
+        return;
+      }
+
+      const cardsHtml = filtered.map(donor => `
+        <div class="bg-white rounded-2xl p-6 donor-card shadow-lg" data-aos="fade-up">
+          <div class="flex items-center space-x-4 mb-4">
+            <div class="bg-red-100 rounded-full w-14 h-14 flex items-center justify-center text-red-600 text-xl font-bold">
+              ${donor.bloodGroup || 'N/A'}
+            </div>
+            <div>
+              <h2 class="text-xl font-semibold text-gray-800">${donor.name || 'Unknown'}</h2>
+              <p class="text-gray-500 text-sm">${donor.contact || 'N/A'}</p>
+            </div>
+          </div>
+          <ul class="text-gray-700 space-y-1 text-sm">
+            <li><strong>Age:</strong> ${donor.age || 'N/A'}</li>
+            <li><strong>Weight:</strong> ${donor.weight || 'N/A'} kg</li>
+            <li><strong>Previous Donations:</strong> ${donor.previousDonations || 'N/A'}</li>
+            <li><strong>Address:</strong> ${donor.address || 'N/A'}</li>
+            <li><strong>Email:</strong> ${donor.email || 'Not provided'}</li>
+          </ul>
+        </div>
+      `);
+
+      donorContainer.innerHTML = cardsHtml.join('');
+      AOS.refresh();
+    }
+
+  
+  </script>
+</body>
+</html>

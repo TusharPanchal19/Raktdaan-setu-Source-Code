@@ -1,0 +1,424 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>RAKTDAAN SETU</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+
+
+    <link rel="stylesheet" href="index.css">
+    <script src="index.js"></script>
+
+    <script src="https://kit.fontawesome.com/your_kit_code.js" crossorigin="anonymous"></script>
+    <script type="module" src="registered_donors.js" defer></script>
+
+<style>
+  /* Fullscreen overlay for loader */
+  #loading-spinner {
+    display: none;
+    position: fixed;
+    top: 0; left: 0;
+    width: 100vw; height: 100vh;
+    background: white; /* solid white background */
+    z-index: 9999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  /* Dotted loader container - rotating */
+  .dot-loader {
+    width: 100px;
+    height: 100px;
+    position: relative;
+    animation: rotateLoader 1.5s linear infinite; /* rotate once every 1.5s */
+  }
+
+  /* Each dot */
+  .dot-loader div {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    background: #dc3545; /* Bootstrap danger red */
+    border-radius: 50%;
+    animation-timing-function: cubic-bezier(0, 1, 1, 0);
+  }
+
+  /* Position dots in circle */
+  .dot-loader div:nth-child(1) { left: 40px; top: 0px; animation: dot-loader1 0.6s infinite; }
+  .dot-loader div:nth-child(2) { left: 70px; top: 15px; animation: dot-loader2 0.6s infinite; }
+  .dot-loader div:nth-child(3) { left: 85px; top: 45px; animation: dot-loader3 0.6s infinite; }
+  .dot-loader div:nth-child(4) { left: 70px; top: 75px; animation: dot-loader4 0.6s infinite; }
+  .dot-loader div:nth-child(5) { left: 40px; top: 90px; animation: dot-loader5 0.6s infinite; }
+  .dot-loader div:nth-child(6) { left: 10px; top: 75px; animation: dot-loader6 0.6s infinite; }
+  .dot-loader div:nth-child(7) { left: -5px; top: 45px; animation: dot-loader7 0.6s infinite; }
+  .dot-loader div:nth-child(8) { left: 10px; top: 15px; animation: dot-loader8 0.6s infinite; }
+
+  /* Dot scaling animations */
+  @keyframes dot-loader1 {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(0.5); }
+  }
+  @keyframes dot-loader2 {
+    0%, 100% { transform: scale(0.8); }
+    50% { transform: scale(0.3); }
+  }
+  @keyframes dot-loader3 {
+    0%, 100% { transform: scale(0.6); }
+    50% { transform: scale(0.1); }
+  }
+  @keyframes dot-loader4 {
+    0%, 100% { transform: scale(0.4); }
+    50% { transform: scale(0.1); }
+  }
+  @keyframes dot-loader5 {
+    0%, 100% { transform: scale(0.6); }
+    50% { transform: scale(0.3); }
+  }
+  @keyframes dot-loader6 {
+    0%, 100% { transform: scale(0.8); }
+    50% { transform: scale(0.5); }
+  }
+  @keyframes dot-loader7 {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(0.7); }
+  }
+  @keyframes dot-loader8 {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(0.6); }
+  }
+
+  /* Loader container rotation */
+  @keyframes rotateLoader {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+</style>
+
+<div id="loading-spinner" aria-label="Loading" role="alert" aria-busy="true" aria-live="assertive">
+  <div class="dot-loader">
+    <div></div><div></div><div></div><div></div>
+    <div></div><div></div><div></div><div></div>
+  </div>
+</div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const loadingSpinner = document.getElementById("loading-spinner");
+    const links = document.querySelectorAll('a[href]:not([href^="javascript"]):not([target="_blank"])');
+
+    links.forEach(link => {
+      link.addEventListener("click", e => {
+        const href = link.getAttribute("href");
+        if (!href || href.startsWith("#") || href.startsWith("mailto:") || href.startsWith("tel:")) {
+          return;
+        }
+        e.preventDefault();
+        loadingSpinner.style.display = "flex";
+        setTimeout(() => {
+          window.location.href = href;
+        }, 600);  // rotate for 1.5 seconds before navigating
+      });
+    });
+  });
+
+  window.addEventListener("load", () => {
+    const loadingSpinner = document.getElementById("loading-spinner");
+    loadingSpinner.style.display = "none";
+  });
+</script>
+
+
+</head>
+
+
+<body>
+
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+        
+           <a class="navbar-brand d-flex align-items-center" href="#">
+    <img src="images.png" alt="Logo" width="30" height="30" class="me-2">
+    RAKTDAAN SETU
+</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link active mx-3" href="#">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link mx-3" href="registration.html">Donate Blood 🩸</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link mx-3" href="donors.html">Find a Donor 🩸</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link mx-3" href="contactus.html">Contact Us 📞</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link mx-3" href="aboutus.html">About Us</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+
+
+
+    <div id="carouselExampleSlidesOnly" class="carousel slide  video-container" data-bs-ride="carousel">
+        <div class="carousel-inner">
+
+            <div class="carousel-item active">
+                <video class="d-block w-100" autoplay loop muted>
+                    <source src="Donation_animation.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+
+
+
+        </div>
+    </div>
+
+
+
+
+
+
+
+    <div class="blood-section">
+        <div class="container my-5">
+            <div class="row g-4 justify-content-center">
+                
+                <div class="col-md-3">
+                    <div class="card blood-card">
+                        <div class="card-body text-center">
+                            <i class="fas fa-search fa-3x text-danger"></i>
+                            <h5 class="card-title mt-3">Find a Donor</h5>
+                            <p class="card-text">Search for a nearby blood donor to save lives.</p>
+                            <a href="donors.html" class="btn btn-danger">Find Now</a>
+                        </div>
+                    </div>
+                </div>
+
+                
+                <div class="col-md-3">
+                    <div class="card blood-card">
+                        <div class="card-body text-center">
+                            <i class="fas fa-hand-holding-heart fa-3x text-primary"></i>
+                            <h5 class="card-title mt-3">Donate Blood</h5>
+                            <p class="card-text">Be a hero! Register now to donate blood.</p>
+                            <a href="registration.html" class="btn btn-primary">Donate Now</a>
+                        </div>
+                    </div>
+                </div>
+
+               
+                <div class="col-md-3">
+                    <div class="card blood-card">
+                        <div class="card-body text-center">
+                            <i class="fas fa-university fa-3x text-success"></i>
+                            <h5 class="card-title mt-3">Compatibility Check</h5>
+                            <p class="card-text">Check Your Blood Group Compatibility.</p>
+                            <a href="compatibilit.html" class="btn btn-success">Check Now</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-3">
+                    <div class="card blood-card">
+                        <div class="card-body text-center">
+                            <i class="fas fa-ambulance fa-3x text-warning"></i>
+                            <h5 class="card-title mt-3">Blood Camps</h5>
+                            <p class="card-text">Join upcoming blood donation drives.</p>
+                            <button onclick="comingSoon()" class="btn btn-warning">View Camps</button>
+                        </div>
+                    </div>
+                </div>
+
+                <script>
+                    function comingSoon() {
+                        alert("🚧 This feature is coming soon. Stay tuned!");
+                    }
+                </script>
+
+                
+                <div class="col-md-3">
+                    <div class="card blood-card">
+                        <div class="card-body text-center">
+                            <i class="fas fa-book-reader fa-3x text-danger"></i>
+                            <h5 class="card-title mt-3">Inspiring Stories</h5>
+                            <p class="card-text">Read real-life stories of blood donors & receivers.</p>
+                            <a href="https://www.inovablood.org/donate-blood/why-donate/patient-donor-stories/#:~:text=Alfie's%20story&text=During%20his%2044%20days%20on,and%20maintain%20critical%20blood%20volume"
+                                class="btn btn-danger">Read Now</a>
+                        </div>
+                    </div>
+                </div>
+
+
+              
+                <div class="col-md-3">
+                    <div class="card blood-card">
+                        <div class="card-body text-center">
+                            <i class="fas fa-bell fa-3x text-danger"></i>
+                            <h5 class="card-title mt-3">Emergency Request</h5>
+                            <p class="card-text">Post an urgent blood request instantly.</p>
+                            <a href="request.html" class="btn btn-success">Send Request</a>
+                        </div>
+                    </div>
+                </div>
+                <script>
+                    function comingSoon() {
+                        alert("🚧 This feature is coming soon. Stay tuned!");
+                    }
+
+                </script>
+
+                <div class="col-md-3">
+                    <div class="card blood-card">
+                        <div class="card-body text-center">
+                            <i class="fas fa-certificate fa-3x text-success"></i>
+                            <h5 class="card-title mt-3">Donation Certificate</h5>
+                            <p class="card-text">Get your digital certificate for donating blood.</p>
+                            <button onclick="comingSoon()" class="btn btn-warning">Download</button>
+                           
+                        </div>
+                    </div>
+                </div>
+                <script>
+                    function comingSoon() {
+                        alert("🚧 This feature is coming soon. Stay tuned!");
+                    }
+
+                </script>
+
+
+          
+                <div class="col-md-3">
+                    <div class="card blood-card">
+                        <div class="card-body text-center">
+                            <i class="fas fa-question-circle fa-3x text-dark"></i>
+                            <h5 class="card-title mt-3">FAQs</h5>
+                            <p class="card-text">Learn more about blood donation safety.</p>
+                            <a href="faq.html" class="btn btn-dark">Know More</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <div class="container my-5" id="eligibility-checker">
+        <h2 class="text-center mb-4 text-danger">Blood Donation Eligibility Checker 🩸</h2>
+        <div class="card shadow p-4 checker-card">
+            <form id="eligibilityForm">
+                <div class="row g-3">
+                    <div class="col-md-4">
+                        <label for="age" class="form-label">Age</label>
+                        <input type="number" class="form-control" id="age" required>
+                    </div>
+                    <div class="col-md-4">
+                        <label for="weight" class="form-label">Weight (kg)</label>
+                        <input type="number" class="form-control" id="weight" required>
+                    </div>
+                    <div class="col-md-4">
+                        <label for="lastDonation" class="form-label">Last Donation (in days)</label>
+                        <input type="number" class="form-control" id="lastDonation" required>
+                    </div>
+                    <div class="col-md-12">
+                        <label for="health" class="form-label">Are you currently healthy?</label>
+                        <select id="health" class="form-select" required>
+                            <option value="">Select</option>
+                            <option value="yes">Yes</option>
+                            <option value="no">No</option>
+                        </select>
+                    </div>
+                    <div class="col-12 text-center">
+                        <button type="submit" class="btn btn-danger px-4">Check Eligibility</button>
+                    </div>
+                </div>
+            </form>
+            <div class="mt-4 text-center" id="resultBox"></div>
+        </div>
+    </div>
+
+
+
+  
+
+    <footer class="footer bg-dark text-white pt-5 pb-4">
+        <div class="container text-center text-md-left">
+            <div class="row text-center text-md-left">
+             
+                <div class="col">
+                    <h5 class="text-uppercase mb-4 font-weight-bold text-warning">LifeSave Foundation</h5>
+                    <p class="foter_content">We are committed to saving lives by connecting blood donors with those in
+                        need, supporting health camps, and raising awareness.</p>
+                </div>
+
+            
+                <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mt-3">
+                    <h5 class="text-uppercase mb-4 font-weight-bold text-warning">Quick Links</h5>
+                    <p><a href="#" class="text-white" style="text-decoration: none;">Home</a></p>
+                    <p><a href="aboutus.html" class="text-white" style="text-decoration: none;">About</a></p>
+                    <p><a href="#" class="text-white" style="text-decoration: none;">Events</a></p>
+                    <p><a href="contactus.html" class="text-white" style="text-decoration: none;">Contact</a></p>
+                </div>
+
+             
+                <div class="col-md-3 col-lg-2 col-xl-2 mx-auto mt-3">
+                    <h5 class="text-uppercase mb-4 font-weight-bold text-warning">Contact:</h5>
+                    <div class="foter_contact">
+                        <p><i class="fas fa-home mr-3"></i> Delhi, India</p>
+                        <p><i class="fas fa-envelope mr-3"></i> support@lifesave.org</p>
+                        <p><i class="fas fa-phone mr-3"></i> +91 12345 67890</p>
+                    </div>
+                </div>
+
+              
+                <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mt-3">
+                    <h5 class="text-uppercase mb-4 font-weight-bold text-warning">Follow Us</h5>
+                    <a href="#" class="text-white me-4"><i class="fab fa-facebook fa-lg"></i></a>
+                    <a href="#" class="text-white me-4"><i class="fab fa-twitter fa-lg"></i></a>
+                    <a href="#" class="text-white me-4"><i class="fab fa-instagram fa-lg"></i></a>
+                    <a href="#" class="text-white me-4"><i class="fab fa-linkedin fa-lg"></i></a>
+                </div>
+            </div>
+
+            <hr class="mb-4">
+
+            <div class="row align-items-center">
+                <div class="col-md-7 col-lg-8">
+                    <p>&copy; 2025 <strong class="text-warning">RAKTDAAN SETU FOUNDATION</strong> | All Rights Reserved</p>
+                </div>
+                <div class="col-md-5 col-lg-4">
+                    <button onclick="scrollToTop()" class="btn btn-outline-warning btn-sm float-end">Top ↑</button>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+
+
+
+
+
+
+
+    <script src="index.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>
